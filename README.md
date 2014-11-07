@@ -40,18 +40,17 @@ Sample job file that asks to download 2 files at a time from 2 distinct bots on 
 ```json
 'jobs' : {
 	'parallelTasks': 2,
-	'network' : {
-	        'channel' : {
-			'bot' : {
-				'name': 'botName1',
-				'packets': '1-5'
-	            	},
-			'bot' : {
-				'name': 'botName2',
-				'packets': '1-5'
-			}
-	        }
-	}
+        'channel' : {
+		'uri' : 'irc://network.com/#channel',
+		'bot' : {
+			'name': 'botName1',
+			'packets': '1-5'
+            	},
+		'bot' : {
+			'name': 'botName2',
+			'packets': '1-5'
+		}
+        }
 }
 ```
 

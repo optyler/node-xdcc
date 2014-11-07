@@ -1,25 +1,59 @@
 #!/usr/bin/env node
 
 var irc = require('irc'),
-    sxdcc = require('./lib/sxdcc'),
+    sxdcc = require('../lib/sxdcc'),
+    parseIRCURL = require('../lib/parseIRCURL'),
     fs = require('fs'),
+    nconf = require('nconf'),
     ProgressBar = require('progress');
 
-if (process.argv.length < 4) {
-  console.log('USAGE: node example.js BOTNAME PACKNUM [start]')
-  return;
+/**
+ * generate random nickname
+ */
+function generateNickname() {
+	return 'opty-' + Math.random().toString(36).substr(7, 3);
 }
 
-var user = 'opty-' + Math.random().toString(36).substr(7, 3);
-var bot = process.argv[2],
-    pack = +process.argv[3],
-    start = process.argv[4] ? +process.argv[4] : 0,
-    progress;
+/**
+ * parse command line and configuration file
+ */
+nconf.argv({
+	// required
+	'nickname' : {
+		describe: 'nickname to use for the connection',
+		default: generateNickname()
+	},
+	'uri' : {
+		describe: 'irc uri to connect to (eg: irc://irc.otaku-irc.fr/#Marvel_World',
+		demand: true
+	},
+	'bot' : {
+		describe: 'bot name to query packs from',
+		demand: true
+	},
+	'pack' : {
+		describe: 'pack to download from bot',
+		demand: true
+	},
+	// optional
+	'threads' : {
+		describe: 'specify how much parallel download you can do if you required packs from several bots',
+		default: 2
+	}
+})
+.file({ file: './config.json' });
+
+var user = nconf.get('nickname');
+var bot = nconf.get('bot');
+var pack = nconf.get('pack');
+var parsedURI = parseIRCURL.parse(nconf.get('uri'));
+var channels = [ parsedURI.target ];
+var progress;
 
 console.log('Connecting...');
 
-client = new irc.Client('irc.otaku-irc.fr', user, {
-  channels: [ '#Marvel_World' ],
+var client = new irc.Client(parsedURI.host, user, {
+  channels: channels,
   userName: user,
   realName: user
 }).on('join', function(channel, nick, message) {
@@ -30,7 +64,7 @@ client = new irc.Client('irc.otaku-irc.fr', user, {
   var progress,
       last = 0;
 
-  sxdcc(client, bot, pack, start, function(err, conn) {
+  sxdcc(client, bot, pack, 0, function(err, conn) {
     if (err) {
       console.log(err);
       return;

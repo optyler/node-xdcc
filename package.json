@@ -5,9 +5,10 @@
   "description": "A fork of Ethan Chan xdcc client with much more options on the command line",
   "homepage": "https://github.com/optyler/node-xdcc",
   "repository": "git://github.com/optyler/node-xdcc",
-  "main": "lib/sxdcc",
+  "bin": "./bin/node-xdcc.js",
   "dependencies": {
     "irc": ">=0.3.0",
-    "progress": "~1.1.8"
+    "progress": "~1.1.8",
+    "nconf": "~0.6.9"
   }
 }
