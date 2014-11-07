@@ -59,6 +59,6 @@ Usage
 -----
 
 ```sh
-node node-xdcc.js [OPTIONS]
+node-xdcc.js [OPTIONS]
 ```
 

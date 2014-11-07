@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var irc = require('irc'),
     sxdcc = require('./lib/sxdcc'),
     fs = require('fs'),
@@ -8,7 +10,7 @@ if (process.argv.length < 4) {
   return;
 }
 
-var user = 'desu' + Math.random().toString(36).substr(7, 3);
+var user = 'opty-' + Math.random().toString(36).substr(7, 3);
 var bot = process.argv[2],
     pack = +process.argv[3],
     start = process.argv[4] ? +process.argv[4] : 0,
@@ -16,8 +18,8 @@ var bot = process.argv[2],
 
 console.log('Connecting...');
 
-client = new irc.Client('irc.rizon.net', user, {
-  channels: [ '#doki' ],
+client = new irc.Client('irc.otaku-irc.fr', user, {
+  channels: [ '#Marvel_World' ],
   userName: user,
   realName: user
 }).on('join', function(channel, nick, message) {
