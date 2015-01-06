@@ -24,18 +24,7 @@ Here is a first list of options that I think will be useful
 	* `1-5 10`: query files `1, 2, 3, 4, 5, 10`
 	* `1-5 8-10`: query files `1, 2, 3, 4, 5, 8, 9, 10`
 
-Download and Install
--------
-
-Get the project and install dependencies:
-
-```sh
-git clone git@github.com:optyler/node-xdcc.git
-cd node-xdcc
-npm install
-```
-
-Sample job file that asks to download 2 files at a time from 2 distinct bots on the same network/channel :
+* Write a job file reader, asks to download many files at a time from several distinct bots on the same network/channel, using that sample configuration file :
 
 ```json
 'jobs' : {
@@ -54,10 +43,21 @@ Sample job file that asks to download 2 files at a time from 2 distinct bots on 
 }
 ```
 
+Download and Install
+-------
+
+Get the project and install dependencies:
+
+```sh
+git clone git@github.com:optyler/node-xdcc.git
+cd node-xdcc
+npm install
+```
+
 Usage
 -----
 
 ```sh
-node-xdcc.js [OPTIONS]
+./node-xdcc.js --uri "irc://irc.absoluty-irc.org/#XDCC" --bot "[FST]-1r0n" --pack 4
 ```
 
